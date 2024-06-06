@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function ProductDetails() {
   const { productId } = useParams();
+
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -44,20 +47,29 @@ function ProductDetails() {
   return (
     <div className="product-details">
 
-      <img src={product.thumbnail} alt={product.thumbnail} />
-      <h2>{product.title}</h2>
-      <p><span>Description: </span>{product.description}</p>
-      <p><span>Category: </span>{product.category}</p>
-      <p><span>Price: </span>{product.price}</p>
-      <p><span>Discount</span>{product.discountPercentage}</p>
-      <p><span>Rating: </span>{product.rating}</p>
-      <p><span>Stock: </span>{product.stock}</p>
-      <p><span>Tags: </span>{product.tags}</p>
-      <p><span>Brand: </span>{product.brand}</p>
+      <Card style={{ width: '100%' }}>
+        <Card.Img variant="top" src={product.thumbnail} />
 
-      <p>
-        images will be here
-      </p>
+        <Card.Body style={{ width: '100%' }}>
+          <Card.Title>{product.title}</Card.Title>
+          <Card.Text>{product.description}</Card.Text>
+        </Card.Body>
+
+        <ListGroup style={{ width: '100%' }} className="list-group-flush rounded-2">
+          <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Category </span>{product.category}</ListGroup.Item>
+          <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Price </span>{product.price}</ListGroup.Item>
+          <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Discount</span>{product.discountPercentage}%</ListGroup.Item>
+          <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Rating </span>{product.rating}</ListGroup.Item>
+          <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Stock </span>{product.stock}</ListGroup.Item>
+          <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Tags </span>{product.tags}</ListGroup.Item>
+          <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Brand </span>{product.brand}</ListGroup.Item>
+        </ListGroup>
+
+        <Card.Body style={{ width: '100%' }}>
+          images will be here
+          {console.log(product)}
+        </Card.Body>
+      </Card>
     </div>
   );
 }

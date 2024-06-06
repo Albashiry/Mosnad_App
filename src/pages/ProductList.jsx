@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import Table from 'react-bootstrap/Table';
 import { Link, useNavigate } from "react-router-dom";
+import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 function Main() {
   const [products, setProducts] = useState([]);
@@ -9,9 +11,7 @@ function Main() {
 
   const [searchText, setSearchText] = useState(""); // State for search term
   const [filteredProducts, setFilteredProducts] = useState([]); // State for filtered products
-
-  // Flag to indicate if filtering is active
-  const [isFilteringActive, setIsFilteringActive] = useState(false);
+  const [isFilteringActive, setIsFilteringActive] = useState(false);  // Flag to indicate if filtering is active
 
   const navigate = useNavigate(); // Use useNavigate inside the component
 
@@ -39,11 +39,11 @@ function Main() {
     fetchData();
   }, []);
 
+
   // Function to handle search text change
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
-    // Filter products based on search term
-    filterProducts(event.target.value);
+    filterProducts(event.target.value); // Filter products based on search term
   };
 
   // Function to filter products based on search term
@@ -59,13 +59,12 @@ function Main() {
       setFilteredProducts(products); // Reset filter if search term is empty
     }
   };
+  const displayedProducts = isFilteringActive ? filteredProducts : products;
 
   // Function to handle product selection (redirect to details page)
-  const handleShowDetails = (product) => {
-    navigate(`/products/${product.id}`);
-  };
-
-  const displayedProducts = isFilteringActive ? filteredProducts : products;
+  // const handleShowDetails = (product) => {
+  //   navigate(`/products/${product.id}`);
+  // };
 
 
   if (isLoading) {
@@ -76,59 +75,57 @@ function Main() {
     return <p>Error fetching products: {error}</p>;
   }
 
-  // const handleShowDetails = (product) => {
-  //   const navigate = useNavigate(); // Use useNavigate inside the component
-  //   navigate(`/products/${product.id}`);
-  // };
-
-
   return (
     <>
-      <input
-        type="text"
-        placeholder="Search Products"
-        value={searchText}
-        onChange={handleSearchChange}
-      />
-      {/* Display filter status conditionally */}
-      {isFilteringActive && <p>Filtering by: "{searchText}"</p>}
+      <div className="header">
+        <InputGroup className="search">
+          <Form.Control
+            placeholder="Search Products"
+            aria-label="Search Products"
+            aria-describedby="basic-addon1"
+            value={searchText}
+            onChange={handleSearchChange}
+          />
+        </InputGroup>
+      </div>
 
+      <div className="content">
+        <Table striped bordered hover variant="light">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>images</th>
+              <th>title</th>
+              <th>price</th>
+              <th>category</th>
+              <th>rating</th>
+              <th>discount</th>
+              <th>Details</th>
+            </tr>
+          </thead>
 
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>images</th>
-            <th>title</th>
-            <th>price</th>
-            <th>category</th>
-            <th>rating</th>
-            <th>discount</th>
-            <th>Details</th>
-          </tr>
-        </thead>
+          <tbody>
+            {
+              displayedProducts.map((product, rowId) => (
+                <tr key={rowId}>
+                  <td>{product.id}</td>
+                  <td><img src={product.thumbnail} alt={product.thumbnail} width='100' /></td>
+                  <td>{product.title}</td>
+                  <td>{product.price}</td>
+                  <td>{product.category}</td>
+                  <td>{product.rating}</td>
+                  <td>{product.discountPercentage}</td>
 
-        <tbody>
-          {
-            displayedProducts.map((product, rowId) => (
-              <tr key={rowId}>
-                <td>{product.id}</td>
-                <td><img src={product.thumbnail} alt={product.thumbnail} width='100' /></td>
-                <td>{product.title}</td>
-                <td>{product.price}</td>
-                <td>{product.category}</td>
-                <td>{product.rating}</td>
-                <td>{product.discountPercentage}</td>
-
-                <td>
-                  {/* <button onClick={() => handleShowDetails(product)}>Details</button> */}
-                  <Link to={`/products/${product.id}`}><button>Details</button></Link>
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </Table>
+                  <td>
+                    {/* <button onClick={() => handleShowDetails(product)}>Details</button> */}
+                    <Link to={`/products/${product.id}`}><button>Details</button></Link>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 }
