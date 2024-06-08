@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Carousel from 'react-bootstrap/Carousel';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
+import { cartData, addToCart, removeFromCart } from '../data';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -10,6 +15,9 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [count, setCount] = useState(1);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +41,44 @@ function ProductDetails() {
     fetchData();
   }, [productId]); // Dependency array ensures fetch happens only when productId changes
 
+
+  const handleQuantityChange = (event) => {
+    const newCount = parseInt(event.target.value);
+    if (newCount > 0) { // Ensure positive quantity
+      setCount(newCount);
+    }
+  };
+
+
+  const handleAddProduct = () => {
+    const newProduct = {
+      id: product.id,
+      title: product.title,
+      description: product.description,
+      category: product.category,
+      price: product.price,
+      discountPercentage: product.discountPercentage,
+      rating: product.rating,
+      stock: product.stock,
+      tags: product.tags,
+      brand: product.brand,
+      images: product.images,
+      thumbnail: product.thumbnail,
+      count: count,
+    };
+
+    if (cartData.some(item => item.id === product.id)) {
+      console.log('This product exists in the JSON object.');
+      removeFromCart(newProduct);
+
+    } else {
+      console.log('This product does not exist in the JSON object.');
+      addToCart(newProduct);
+
+    }
+    setAdded(!added);
+  };
+
   if (isLoading) {
     return <p>Loading product details...</p>;
   }
@@ -52,7 +98,7 @@ function ProductDetails() {
         {/* <Card.Img src={product.thumbnail} variant="top" style={{ height: '250px', width: '250px', margin: '0 auto' }} /> */}
         <Carousel style={{ width: '100%' }}>
           {product.images.map((image, index) => (
-            <Carousel.Item key={index} style={{ height: '600px'}}>
+            <Carousel.Item key={index} style={{ height: '600px' }}>
               <img className="d-block w-100 h-100" src={image} alt={product.title + ' Image ' + (index + 1)} />
             </Carousel.Item>
           ))}
@@ -71,6 +117,24 @@ function ProductDetails() {
           <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Tags </span>{product.tags}</ListGroup.Item>
           <ListGroup.Item style={{ width: '90%', textAlign: 'left' }}><span>Brand </span>{product.brand}</ListGroup.Item>
         </ListGroup>
+
+        <InputGroup className="mb-0">
+          <InputGroup.Text id="inputGroup-sizing-default">
+            Quantity:
+          </InputGroup.Text>
+          <Form.Control
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
+            type="number"
+            min='1'
+            max={product.stock}
+            value={count}
+            onChange={handleQuantityChange}
+          />
+          {added == 0
+            ? <Button onClick={handleAddProduct} className='mt-0' variant="primary">Add to cart</Button>
+            : <Button onClick={handleAddProduct} className='mt-0' variant="primary">Remove from cart</Button>}
+        </InputGroup>
       </Card>
     </div>
   );

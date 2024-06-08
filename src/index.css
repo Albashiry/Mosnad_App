@@ -16,27 +16,3 @@ div {
 div#root {
   min-height: 100vh;
 }
-
-.header,
-.content{
-  border: 1px solid white;
-  width: 90%;
-}
-
-.product-details {
-  border: 1px solid white;
-  width: 70%;
-  padding: 20px;
-  text-align: center;
-}
-
-.product-details span{
-  background-color: gold;
-  display: inline-block;
-  width: 15%;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 5px;
-  padding-left: 10px;
-  margin-right: 5px;
-}

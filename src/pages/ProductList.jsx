@@ -87,6 +87,9 @@ function Main() {
             onChange={handleSearchChange}
           />
         </InputGroup>
+
+        {/* move this link to the navbar  */}
+        <Link to="/cart">Shopping Cart</Link> 
       </div>
 
       <div className="content">
