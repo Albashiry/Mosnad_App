@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { cartData, addToCart, removeFromCart } from '../data';
+import { cartData, addToCart, removeFromCart, searchInCart } from '../data';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -67,7 +67,7 @@ function ProductDetails() {
       count: count,
     };
 
-    if (cartData.some(item => item.id === product.id)) {
+    if (searchInCart(product.id)) {
       console.log('This product exists in the JSON object.');
       removeFromCart(newProduct);
 
@@ -131,7 +131,7 @@ function ProductDetails() {
             value={count}
             onChange={handleQuantityChange}
           />
-          {added == 0
+          {added == 0 && !searchInCart(product.id)
             ? <Button onClick={handleAddProduct} className='mt-0' variant="primary">Add to cart</Button>
             : <Button onClick={handleAddProduct} className='mt-0' variant="primary">Remove from cart</Button>}
         </InputGroup>

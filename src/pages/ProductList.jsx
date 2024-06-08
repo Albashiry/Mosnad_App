@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
 
 function Main() {
   const [products, setProducts] = useState([]);
@@ -78,7 +79,7 @@ function Main() {
   return (
     <>
       <div className="header">
-        <InputGroup className="search">
+        <InputGroup className="search" style={{backgroundColor: '#f8f9fa'}}>
           <Form.Control
             placeholder="Search Products"
             aria-label="Search Products"
@@ -86,10 +87,13 @@ function Main() {
             value={searchText}
             onChange={handleSearchChange}
           />
+          
+          <Button variant="outline-warning" id="button-addon2">
+            {/* move this link to the navbar  */}
+            <Link to="/cart"  style={{textDecoration: 'none', fontWeight: 'bold'}}>Shopping Cart</Link>
+          </Button>
         </InputGroup>
 
-        {/* move this link to the navbar  */}
-        <Link to="/cart">Shopping Cart</Link> 
       </div>
 
       <div className="content">

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {cartData} from '../data';
+import { useState, useEffect } from 'react';
+import { cartData, editProductInCart } from '../data';
 
 function ShoppingCart() {
   const [cartItems, setCartItems] = useState([]); // State for cart items (objects)
@@ -46,11 +46,11 @@ function ShoppingCart() {
     // Example: Apply a 10% discount
     return subtotal * 0.9;
   };
-
+console.log(cartData);
   return (
     <div className="shopping-cart">
       <h2>Shopping Cart</h2>
-      {cartItems.length === 0 ? (
+      {cartData.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <ul className="cart-items">
