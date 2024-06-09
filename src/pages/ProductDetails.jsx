@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { cartData, addToCart, removeFromCart, searchInCart } from '../data';
+import { addToCart, removeFromCart, searchInCart } from '../data';
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -53,17 +53,17 @@ function ProductDetails() {
   const handleAddProduct = () => {
     const newProduct = {
       id: product.id,
-      title: product.title,
-      description: product.description,
-      category: product.category,
-      price: product.price,
-      discountPercentage: product.discountPercentage,
-      rating: product.rating,
-      stock: product.stock,
-      tags: product.tags,
-      brand: product.brand,
-      images: product.images,
-      thumbnail: product.thumbnail,
+      // title: product.title,
+      // description: product.description,
+      // category: product.category,
+      // price: product.price,
+      // discountPercentage: product.discountPercentage,
+      // rating: product.rating,
+      // stock: product.stock,
+      // tags: product.tags,
+      // brand: product.brand,
+      // images: product.images,
+      // thumbnail: product.thumbnail,
       count: count,
     };
 

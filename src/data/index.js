@@ -14,9 +14,20 @@ export let cartData = [
   //   thumbnail: 'product.thumbnail',
   //   count: 'count',
   // },
+
+  { id: 1, count: 1 },
+  { id: 2, count: 5 },
+  { id: 3, count: 2 },
+  { id: 4, count: 4 },
+  { id: 5, count: 3 },
 ];
 
+export function searchInCart(productId) {
+  return cartData.some(item => item.id === productId);
+}
+
 export function addToCart(product) {
+  searchInCart(product.id) && removeFromCart(product);
   cartData = [...cartData, product];
   console.log(cartData);
 }
@@ -29,10 +40,6 @@ export function removeFromCart(product) {
 }
 
 export function editProductInCart(product) {
-  removeFromCart(product);
+  searchInCart(product.id) && removeFromCart(product);
   addToCart(product);
-}
-
-export function searchInCart(productId){
-  return cartData.some(item => item.id === productId);
 }

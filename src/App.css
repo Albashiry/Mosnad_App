@@ -1,8 +1,7 @@
-
 .header,
 .content,
 .product-details,
-.shopping-cart{
+.shopping-cart {
   border: 1px solid white;
   width: 90%;
 }
@@ -13,7 +12,7 @@
   text-align: center;
 }
 
-.product-details span{
+.product-details span {
   background-color: gold;
   display: inline-block;
   width: 15%;
@@ -23,6 +22,31 @@
   margin-right: 5px;
 }
 
-.shopping-cart{
+.shopping-cart {
   padding: 15px;
+}
+
+.cart-items {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.cart-items .card {
+  margin: 5px auto;
+}
+
+.cart-items .remove {
+  position: absolute;
+}
+
+.cart-items .img {
+  cursor: pointer;
+  transition: all 0.5s;
+  border-radius: 5px;
+}
+
+.cart-items .img:hover {
+  /* transform: scale(0.9); */
+  box-shadow: inset 1px 1px 15px black;
 }
